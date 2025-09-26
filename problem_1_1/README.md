@@ -31,10 +31,6 @@ dart run bin/problem_1_1.dart
 dart run bin/problem_1_1.dart 95
 ```
 
-### 메시지 형식
-
-"이 학생의 점수는 [점수]점 이며, 등급은 [등급]등급입니다!"
-
 ## 필수 문제 2번
 
 ```dart
@@ -51,4 +47,18 @@ dart run bin/problem_1_1.dart 95
 - 구매자의 장바구니 품목들이 아래 리스트와 같다면, 물품의 전체 금액을 계산하여 출력하세요!
     - List<String> cart = ["티셔츠", "바지", "모자", "티셔츠", "바지"];
 - 출력 형태 : "장바구니에 [가격]원 어치를 담으셨네요 !"
+```
+
+### 실행 방법 (CLI)
+
+#### 바로 실행
+
+```bash
+dart run bin/problem_1_2.dart
+```
+
+#### 점수 전달하여 실행
+
+```bash
+dart run bin/problem_1_2.dart 바지,티셔츠,모자,바지
 ```
