@@ -1,1 +1,36 @@
-A sample command-line application providing basic argument parsing with an entrypoint in `bin/`.
+# 내배캠 플러터 창업 8기 과제
+
+## 필수 문제 1번
+
+```Plain Text
+[ 설명 ]
+
+- 제시된 예시 점수에  해당하는 등급을 알맞게 출력하세요!
+
+[ 조건 ]
+
+- 예시 점수 : 84점
+- 점수에 따른 등급 기준
+    - 90점 ~ 100점 : A등급
+    - 80점 ~ 89점 : B등급
+    - 80점 이하는 C등급
+- 출력 형태 : 이 학생의 점수는 [점수] 이며, 등급은 [등급]입니다!
+```
+
+### 실행 방법 (CLI)
+
+#### 바로 실행 (기본값 84점)
+
+```bash
+dart run bin/problem_1_1.dart
+```
+
+#### 점수 전달하여 실행 (예: 95점)
+
+```bash
+dart run bin/problem_1_1.dart 95
+```
+
+### 메시지 형식
+
+"이 학생의 점수는 [점수]점 이며, 등급은 [등급]등급입니다!"
