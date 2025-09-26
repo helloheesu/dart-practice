@@ -39,7 +39,10 @@ void main() {
 
   final Set<int> winningNumbers = generateWinningNumbers();
   print('당첨 번호 : ${winningNumbers.toList()..sort()}');
-  final int matchCount = lotto.where((n) => winningNumbers.contains(n)).length;
 
+  final int matchCount = lotto.where((n) => winningNumbers.contains(n)).length;
   print('당첨 여부 : ${getWinningGrade(matchCount)}');
+
+  lotto.clear();
+  print('초기화된 복권 번호 : $lotto');
 }
