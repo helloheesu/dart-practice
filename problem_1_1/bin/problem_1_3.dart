@@ -13,6 +13,14 @@ List<int> generateLottoNumbers({int count = 6, int maxNumber = 45}) {
   return sorted;
 }
 
+Set<int> generateWinningNumbers({int count = 6, int maxNumber = 45}) {
+  final Random random = Random();
+  final List<int> pool = List<int>.generate(maxNumber, (index) => index + 1);
+  pool.shuffle(random);
+  final Set<int> selected = pool.sublist(0, count).toSet();
+  return selected;
+}
+
 String getWinningGrade(int matchCount) {
   if (matchCount >= 5) {
     return '1등';
@@ -26,11 +34,11 @@ String getWinningGrade(int matchCount) {
 }
 
 void main() {
-  // final List<int> lotto = [9, 19, 29, 35, 37, 38]; // 테스트용 로또 번호
   final List<int> lotto = generateLottoNumbers();
   print('발급한 로또 번호 : $lotto');
 
-  const Set<int> winningNumbers = {9, 19, 29, 35, 37, 38};
+  final Set<int> winningNumbers = generateWinningNumbers();
+  print('당첨 번호 : ${winningNumbers.toList()..sort()}');
   final int matchCount = lotto.where((n) => winningNumbers.contains(n)).length;
 
   print('당첨 여부 : ${getWinningGrade(matchCount)}');
