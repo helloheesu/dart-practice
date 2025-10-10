@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:week_3/models/student_score.dart';
 
-List<StudentScore> loadStudentData(String filePath) {
+Future<List<StudentScore>> loadStudentData(String filePath) async {
   final List<StudentScore> studentScores = [];
 
   try {
     final file = File(filePath);
-    final lines = file.readAsLinesSync();
+    final lines = await file.readAsLines();
 
     for (final line in lines) {
       if (line.trim().isEmpty) continue;
