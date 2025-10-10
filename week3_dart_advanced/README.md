@@ -22,7 +22,7 @@
 ```
 
 ```dart
-학생의 점수를 위한 Score 클래스
+학생의 점수를 위한 StudentScore 클래스
 
 - 속성(Property)
   - 이름(String)
@@ -62,7 +62,7 @@
 
 ```dart
 @override
-void show() {
+void showInfo() {
   // 코드 구현
 }
 ```
