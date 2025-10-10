@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:week_3/models/student_score.dart';
 
-Future<List<StudentScore>> loadStudentData(String filePath) async {
-  final List<StudentScore> studentScores = [];
+Future<Map<String, StudentScore>> loadStudentData(String filePath) async {
+  final Map<String, StudentScore> studentScores = {};
 
   try {
     final file = File(filePath);
@@ -17,11 +17,10 @@ Future<List<StudentScore>> loadStudentData(String filePath) async {
         throw FormatException('잘못된 데이터 형식: $line');
       }
 
-      final [name, score] = parts;
+      final String name = parts[0].trim();
+      final int score = int.parse(parts[1].trim());
 
-      studentScores.add(
-        StudentScore(studentName: name.trim(), score: int.parse(score.trim())),
-      );
+      studentScores[name] = StudentScore(studentName: name, score: score);
     }
   } catch (e) {
     print('학생 데이터를 불러오는 데 실패했습니다: $e');
