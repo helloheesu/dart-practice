@@ -24,13 +24,13 @@
 바로 실행 (기본값 84점)
 
 ```bash
-dart run bin/problem_1_1.dart
+dart run bin/core_problem_1.dart
 ```
 
 점수 전달하여 실행 (예: 95점)
 
 ```bash
-dart run bin/problem_1_1.dart 95
+dart run bin/core_problem_1.dart 95
 ```
 
 ## 필수 문제 2번
@@ -87,13 +87,13 @@ dart run bin/problem_1_1.dart 95
 바로 실행
 
 ```bash
-dart run bin/problem_1_2.dart
+dart run bin/core_problem_2.dart
 ```
 
 점수 전달하여 실행
 
 ```bash
-dart run bin/problem_1_2.dart 바지,티셔츠,모자,바지
+dart run bin/core_problem_2.dart 바지,티셔츠,모자,바지
 ```
 
 ## 도전 문제
@@ -161,5 +161,5 @@ dart run bin/problem_1_2.dart 바지,티셔츠,모자,바지
 ### 실행 방법 (CLI)
 
 ```bash
-dart run bin/problem_1_1.dart
+dart run bin/challenge_problem_1.dart
 ```
