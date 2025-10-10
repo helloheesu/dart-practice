@@ -1,10 +1,11 @@
-import 'package:week_3/models/score.dart';
-import 'package:week_3/models/student_score.dart';
+import 'package:week_3/services/student_loader.dart';
 
 void main(List<String> arguments) {
-  final scoreOnly = Score(score: 85);
-  scoreOnly.showInfo();
+  final studentScores = loadStudentData(
+    '/Users/heesu/Documents/dart_practice/week3_dart_advanced/students.txt',
+  );
 
-  final student = StudentScore(studentName: '홍길동', score: 90);
-  student.showInfo();
+  for (final studentScore in studentScores) {
+    studentScore.showInfo();
+  }
 }
