@@ -4,6 +4,11 @@ class Score {
   const Score({required this.score});
 
   showInfo() {
-    print('점수: $score');
+    print(toString());
+  }
+
+  @override
+  String toString() {
+    return '점수: $score';
   }
 }

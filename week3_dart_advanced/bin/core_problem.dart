@@ -11,6 +11,5 @@ Future<void> main(List<String> arguments) async {
   final selected = readStudentNameFromStdin(studentScores);
   selected.showInfo();
 
-  final content = '이름: ${selected.studentName}, 점수: ${selected.score}';
-  saveStringToFile(filePath: outputFilePath, content: content);
+  saveStringToFile(filePath: outputFilePath, content: selected.toString());
 }

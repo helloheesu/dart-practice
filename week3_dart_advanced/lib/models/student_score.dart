@@ -7,6 +7,11 @@ class StudentScore extends Score {
 
   @override
   showInfo() {
-    print('이름: $studentName, 점수: $score');
+    print(toString());
+  }
+
+  @override
+  String toString() {
+    return '이름: $studentName, 점수: $score';
   }
 }
