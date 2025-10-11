@@ -47,6 +47,11 @@
 
 ### 실행 방법 (CLI)
 
+```sh
+# week3_dart_advanced 디렉토리에서 실행
+dart bin/core_problem.dart
+```
+
 ### 요구사항
 
 #### 1. Score와 StudentScore 클래스를 구성하기
