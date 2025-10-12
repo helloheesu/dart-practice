@@ -6,7 +6,7 @@ const inputFilePath = 'students.txt';
 const outputFilePath = 'result.txt';
 
 Future<void> main(List<String> arguments) async {
-  final studentScores = await loadStudentData(inputFilePath);
+  final studentScores = await loadStudentDataFromFile(inputFilePath);
 
   final selected = readStudentNameFromStdin(studentScores);
   selected.showInfo();

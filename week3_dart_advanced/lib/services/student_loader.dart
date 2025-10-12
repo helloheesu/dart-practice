@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:week_3/models/student_score.dart';
 
-Future<Map<String, StudentScore>> loadStudentData(String filePath) async {
+Future<Map<String, StudentScore>> loadStudentDataFromFile(
+  String filePath,
+) async {
   final Map<String, StudentScore> studentScores = {};
 
   try {
