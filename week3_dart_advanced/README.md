@@ -172,6 +172,11 @@ void saveStringToFile(String filePath, String content) {
 
 ### 실행 방법 (CLI)
 
+```sh
+# week3_dart_advanced 디렉토리에서 실행
+dart bin/challenge_problem.dart
+```
+
 ### 요구사항
 
 #### 시나리오
