@@ -10,7 +10,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         '희수`s Tasks',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
-      backgroundColor: Colors.grey[200],
     );
   }
 

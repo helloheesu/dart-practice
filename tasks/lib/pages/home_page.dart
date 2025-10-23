@@ -10,8 +10,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainAppBar(),
-      // theme
-      backgroundColor: Colors.grey[400],
       body: SizedBox.expand(child: const EmptyTasksPlaceholder()),
       floatingActionButton: AddTaskButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
