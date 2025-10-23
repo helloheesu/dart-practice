@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
 class EmptyTasksPlaceholder extends StatelessWidget {
   const EmptyTasksPlaceholder({super.key});
@@ -24,8 +25,8 @@ class EmptyTasksPlaceholder extends StatelessWidget {
 
           // 타이틀 받아서 사용하도록 변경
           Text(
-            '할 일을 추가하고 희수`s Tasks에서\n할 일을 추적하세요.',
-            style: TextStyle(fontSize: 14, height: 1.5),
+            '할 일을 추가하고 ${AppConstants.appTitle}에서\n할 일을 추적하세요.',
+            style: const TextStyle(fontSize: 14, height: 1.5),
             textAlign: TextAlign.center,
           ),
         ],
