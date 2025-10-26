@@ -4,6 +4,7 @@ import '../widgets/empty_tasks_placeholder.dart';
 import '../widgets/add_task_button.dart';
 import '../models/task_entity.dart';
 import '../widgets/task_view.dart';
+import 'task_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,6 +36,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _openTaskDetail(int index) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => TaskDetailPage(
+          task: _tasks[index],
+          onToggleFavorite: () => _toggleFavorite(index),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +59,15 @@ class _HomePageState extends State<HomePage> {
                 itemCount: _tasks.length,
                 itemBuilder: (context, index) {
                   final TaskEntity task = _tasks[index];
-                  return TaskView(
-                    task: task,
-                    onToggleDone: () => _toggleDone(index),
-                    onToggleFavorite: () => _toggleFavorite(index),
+                  return InkWell(
+                    onTap: () => _openTaskDetail(index),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    child: TaskView(
+                      task: task,
+                      onToggleDone: () => _toggleDone(index),
+                      onToggleFavorite: () => _toggleFavorite(index),
+                    ),
                   );
                 },
               ),

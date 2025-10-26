@@ -1,6 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:tasks/models/task_entity.dart';
 
+class MinimalIconButton extends StatelessWidget {
+  const MinimalIconButton({
+    super.key,
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final VoidCallback onPressed;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      iconSize: 24,
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
+      style: const ButtonStyle(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap, // the '2023' part
+      ),
+      onPressed: onPressed,
+      icon: Icon(icon),
+    );
+  }
+}
+
 class TaskView extends StatelessWidget {
   const TaskView({
     super.key,
@@ -17,22 +42,18 @@ class TaskView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 12,
         children: [
-          IconButton(
-            iconSize: 24,
+          MinimalIconButton(
             onPressed: onToggleDone,
-            icon: Icon(
-              task.isDone ? Icons.check_circle : Icons.circle_outlined,
-            ),
+            icon: task.isDone ? Icons.check_circle : Icons.circle_outlined,
           ),
-          const SizedBox(width: 12),
           Expanded(
             child: Text(
               task.title,
@@ -45,11 +66,9 @@ class TaskView extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(width: 12),
-          IconButton(
-            iconSize: 24,
+          MinimalIconButton(
             onPressed: onToggleFavorite,
-            icon: Icon(task.isFavorite ? Icons.star : Icons.star_border),
+            icon: task.isFavorite ? Icons.star : Icons.star_border,
           ),
         ],
       ),
