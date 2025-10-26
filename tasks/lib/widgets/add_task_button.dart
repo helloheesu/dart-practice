@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 class AddTaskButton extends StatelessWidget {
   const AddTaskButton({super.key});
 
+  _onSubmitted(BuildContext context, String title) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('추가됨: $title')));
+    Navigator.of(context).pop();
+  }
+
   _showAddTaskBottomSheet(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
@@ -20,6 +27,9 @@ class AddTaskButton extends StatelessWidget {
           autofocus: true,
           style: const TextStyle(fontSize: 16),
           decoration: const InputDecoration(hintText: '새 할 일'),
+          onSubmitted: (value) {
+            _onSubmitted(context, value);
+          },
         ),
       ),
     );
