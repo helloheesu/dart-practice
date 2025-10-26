@@ -4,6 +4,7 @@ import 'package:tasks/models/task_entity.dart';
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final TextEditingController _titleController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
+  TaskEntity _task = const TaskEntity(title: '');
 
   @override
   void dispose() {
@@ -12,12 +13,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     super.dispose();
   }
 
-  void _submit(String title) {
-    final trimmed = title.trim();
-    if (trimmed.isEmpty) return;
+  void _submit() {
+    if (_task.title.isEmpty) return;
 
-    final task = TaskEntity(title: trimmed);
-    widget.onSubmitted(task);
+    widget.onSubmitted(_task);
 
     Navigator.of(context).pop();
   }
@@ -31,18 +30,63 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         top: 12,
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: TextField(
-        controller: _titleController,
-        focusNode: _titleFocusNode,
-        autofocus: true,
-        style: const TextStyle(fontSize: 16),
-        decoration: const InputDecoration(hintText: '새 할 일'),
-        onSubmitted: _submit,
-        onEditingComplete: () {
-          if (_titleController.text.trim().isEmpty) {
-            _titleFocusNode.requestFocus();
-          }
-        },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 12,
+        children: [
+          TextField(
+            controller: _titleController,
+            focusNode: _titleFocusNode,
+            autofocus: true,
+            style: const TextStyle(fontSize: 16),
+            decoration: const InputDecoration(hintText: '새 할 일'),
+            onChanged: (s) {
+              final t = s.trim();
+              if (t == _task.title) return;
+
+              setState(() {
+                _task = TaskEntity(
+                  title: t,
+                  description: _task.description,
+                  isFavorite: _task.isFavorite,
+                  isDone: _task.isDone,
+                );
+              });
+            },
+            onSubmitted: (_) => _submit(),
+            onEditingComplete: () {
+              if (_task.title.isEmpty) {
+                _titleFocusNode.requestFocus();
+              }
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(
+                  _task.isFavorite ? Icons.star : Icons.star_border,
+                  size: 24,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _task = TaskEntity(
+                      title: _task.title,
+                      description: _task.description,
+                      isFavorite: !_task.isFavorite,
+                      isDone: _task.isDone,
+                    );
+                  });
+                },
+              ),
+              TextButton(
+                onPressed: _task.title.isNotEmpty ? _submit : null,
+                child: Text('저장'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

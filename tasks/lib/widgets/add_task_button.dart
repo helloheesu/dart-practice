@@ -6,9 +6,13 @@ class AddTaskButton extends StatelessWidget {
   const AddTaskButton({super.key});
 
   _handleTaskSubmitted(BuildContext context, TaskEntity task) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('추가됨: ${task.title}')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '추가됨: ${task.title}, ${task.isFavorite ? '즐겨찾기' : '즐겨찾기 아님'}',
+        ),
+      ),
+    );
   }
 
   _showAddTaskBottomSheet(BuildContext context) {
