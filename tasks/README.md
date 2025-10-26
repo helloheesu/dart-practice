@@ -89,8 +89,8 @@ TaskView
     - Icon(circle & check_circle) : 버튼이 눌렸을 때 Done 상태 변경
     - 텍스트(To Do의 title) : Done 상태에 따라서 취소선 상태 적용
     - Icon(star & star_border) : 버튼이 눌렸을 때 Favorite 상태 변경
-  - Task 객체를 외부에서 받아오므로, 이를 수정할 수 있는 함수 또한 외부에서 받아야 합니다.
-    (VoidCallback 을 인자로 받으세요!)
+  - Task 객체를 외부에서 받아오므로, 이를 수정할 수 있는 함수(`onSubmitted()`) 또한 외부에서 받아야 합니다.
+    (`ValueChanged` 을 인자로 받으세요!)
 - To Do가 없을 때는 처음 만들었던 `EmptyTasksPlaceholder`를,
   있을 때는 `TaskView`가 리스트 뷰를 이용해서 화면에 표시되도록 구현
 
