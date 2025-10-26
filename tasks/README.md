@@ -7,7 +7,7 @@
 
 ## 데이터 구조
 
-`ToDoEntity` Class
+`TaskEntity` Class
 
 ```dart
   final String title;
@@ -24,7 +24,7 @@
 - 이미지 webp로 변경
 - 앱바, 할일플레이스홀더 색상을 테마로 변경
 
-### 기본 화면(To Do 리스트가 없는 화면)
+### 기본 화면(Task 리스트가 없는 화면 - `EmptyTasksPlaceholder`)
 
 타이틀
 
@@ -44,18 +44,18 @@
 
 - Icon 사용하기 (Icon Class의 add icon 사용)
 - 아이콘은 흰색, 사이즈 24, 배경은 원하는 색상, 버튼 모양은 원형 적용
-- 눌렀을 때 작동 될 addTodo 함수 작성 및 위젯에 연결
+- 눌렀을 때 작동 될 `_showAddTaskBottomSheet()` 함수 작성 및 위젯에 연결
 
-### To Do를 추가하는 화면
+### To Do를 추가하는 화면 (`AddTaskBottomSheet`)
 
 레이아웃
 
 - BottomSheet의 좌우 패딩 20, 위의 패딩 12, 하단 패딩은 0.
-- 만든 BottomSheet에 TextField를 넣기(ToDo title 입력 용, hint : 새 할 일, 텍스트 사이즈 16)
-- 자동으로 ToDo 추가 창이 뜰 때 키보드가 뜨도록 구현, title 입력용 TextField에 focus가 잡히도록 구현
+- 만든 BottomSheet에 TextField를 넣기(Task title 입력 용, hint : 새 할 일, 텍스트 사이즈 16)
+- 자동으로 Task 추가 창이 뜰 때 키보드가 뜨도록 구현, title 입력용 TextField에 focus가 잡히도록 구현
 - 해당 BottomSheet가 키보드 위로 잡히도록 bottom Padding 수정
   (MediaQuery.of(context).viewInsets.bottom 사용)
-- title 입력용 TextField에서는 줄바꿈 대신 저장이(saveToDo()) 적용되도록 구현
+- title 입력용 TextField에서는 줄바꿈 대신 저장이(`onSubmitted()`) 적용되도록 구현
   (title이 비었을때는 작동되지 않도록 구현)
 
 아이콘
@@ -68,48 +68,48 @@
     (hint : 세부정보 추가, 텍스트 사이즈 14, TextField 화면 표시 시, description 용 Icon 숨기기)
 - 아이콘들이 있는 라인에 Row를 이용하여 끝에 ‘저장’ 버튼이 있도록 구현
   - ‘저장’ 버튼은 title에 입력된 요소가 있을 때만 활성화(색상 차이 구현)
-  - ToDo를 저장하는 함수(saveToDo())를 만들어서 연결
-- 저장이 작동되면 ToDo 객체를 반환하고 창 닫기(Navigator.of(context).pop() 사용)
+  - Task를 저장하는 함수(`onSubmitted()`)를 만들어서 연결
+- 저장이 작동되면 Task 객체를 반환하고 창 닫기(Navigator.of(context).pop() 사용)
 
 text field
 
 - description 입력용 TextField에서는 줄바꿈이 적용되도록 구현
-  (세부사항 줄이 늘어났을 때, view가 깨지지 않도록 expanded로 감싸줄 것!)
+  (세부사항 줄이 늘어났을 때, view가 깨지지 않도록 ~expanded로 감싸줄 것~! => `minLines`/`maxLines`로 구현)
 
 FAB
 
 - Scaffold의 resizeToAvoidBottomInset을 사용하여, 키보드 노출과 무관하게 FloatingActionButton의 위치가 변하지 않게 만들기
 
-### To Do가 추가 된 화면
+### To Do가 추가 된 화면 (`HomePage` - `TaskView`)
 
-ToDoView
+TaskView
 
-- ToDoEntity 를 인자로 받는 ToDoView 위젯 만들기
+- TaskEntity 를 인자로 받는 TaskView 위젯 만들기
   - 마진 수직 8, 패딩 수평 16, 라운딩 12, 내부 요소들 간 간격 12으로 구현
     - Icon(circle & check_circle) : 버튼이 눌렸을 때 Done 상태 변경
     - 텍스트(To Do의 title) : Done 상태에 따라서 취소선 상태 적용
     - Icon(star & star_border) : 버튼이 눌렸을 때 Favorite 상태 변경
-  - ToDo 객체를 외부에서 받아오므로, 이를 수정할 수 있는 함수 또한 외부에서 받아야 합니다.
+  - Task 객체를 외부에서 받아오므로, 이를 수정할 수 있는 함수 또한 외부에서 받아야 합니다.
     (VoidCallback 을 인자로 받으세요!)
-- To Do가 없을 때는 처음 만들었던 NoToDo(3번에서 만든 위젯)를,
-  있을 때는 ToDoView가 리스트 뷰를 이용해서 화면에 표시되도록 구현
+- To Do가 없을 때는 처음 만들었던 `EmptyTasksPlaceholder`를,
+  있을 때는 `TaskView`가 리스트 뷰를 이용해서 화면에 표시되도록 구현
 
 ```dart
-class ToDoView extends StatelessWidget {
-  const ToDoView({
+class TaskView extends StatelessWidget {
+  const TaskView({
     super.key,
-    required this.toDo,
+    required this.task,
     required this.onToggleFavorite,
     required this. onToggleDone,
   });
 
-  final ToDoEntity toDo;
+  final TaskEntity task;
   final VoidCallback onToggleFavorite; final VoidCallback onToggleDone;
 // ...
 }
 ```
 
-### To Do 상세 보기 화면
+### Task 상세 보기 화면
 
 기능
 
@@ -119,4 +119,4 @@ class ToDoView extends StatelessWidget {
 
 레이아웃
 
-- ToDoEntity를 받아서 화면 컨텐츠 채우기
+- TaskEntity를 받아서 화면 컨텐츠 채우기
