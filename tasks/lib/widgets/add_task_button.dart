@@ -5,11 +5,10 @@ import 'package:tasks/widgets/add_task_bottomsheet.dart';
 class AddTaskButton extends StatelessWidget {
   const AddTaskButton({super.key});
 
-  _onSubmitted(BuildContext context, TaskEntity task) {
+  _handleTaskSubmitted(BuildContext context, TaskEntity task) {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('추가됨: ${task.title}')));
-    Navigator.of(context).pop();
   }
 
   _showAddTaskBottomSheet(BuildContext context) {
@@ -19,7 +18,7 @@ class AddTaskButton extends StatelessWidget {
       context: context,
       builder: (context) => AddTaskBottomSheet(
         onSubmitted: (task) {
-          _onSubmitted(context, task);
+          _handleTaskSubmitted(context, task);
         },
       ),
     );

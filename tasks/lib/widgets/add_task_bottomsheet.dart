@@ -10,6 +10,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     super.dispose();
   }
 
+  void _submit(String title) {
+    final trimmed = title.trim();
+    if (trimmed.isEmpty) return;
+
+    final task = TaskEntity(title: trimmed);
+    widget.onSubmitted(task);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,9 +34,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         autofocus: true,
         style: const TextStyle(fontSize: 16),
         decoration: const InputDecoration(hintText: '새 할 일'),
-        onSubmitted: (value) {
-          widget.onSubmitted(TaskEntity(title: value));
-        },
+        onSubmitted: _submit,
       ),
     );
   }
