@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
       body: SizedBox.expand(child: const EmptyTasksPlaceholder()),
       floatingActionButton: AddTaskButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      resizeToAvoidBottomInset: false,
     );
   }
 }
