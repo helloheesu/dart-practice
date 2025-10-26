@@ -3,10 +3,12 @@ import 'package:tasks/models/task_entity.dart';
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final TextEditingController _titleController = TextEditingController();
+  final FocusNode _titleFocusNode = FocusNode();
 
   @override
   void dispose() {
     _titleController.dispose();
+    _titleFocusNode.dispose();
     super.dispose();
   }
 
@@ -31,10 +33,16 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       ),
       child: TextField(
         controller: _titleController,
+        focusNode: _titleFocusNode,
         autofocus: true,
         style: const TextStyle(fontSize: 16),
         decoration: const InputDecoration(hintText: '새 할 일'),
         onSubmitted: _submit,
+        onEditingComplete: () {
+          if (_titleController.text.trim().isEmpty) {
+            _titleFocusNode.requestFocus();
+          }
+        },
       ),
     );
   }
