@@ -56,12 +56,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               if (t == _task.title) return;
 
               setState(() {
-                _task = TaskEntity(
-                  title: t,
-                  description: _task.description,
-                  isFavorite: _task.isFavorite,
-                  isDone: _task.isDone,
-                );
+                _task = _task.copyWith(title: t);
               });
             },
             onSubmitted: (_) => _submit(),
@@ -86,12 +81,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               ),
               onChanged: (s) {
                 setState(() {
-                  _task = TaskEntity(
-                    title: _task.title,
-                    description: s,
-                    isFavorite: _task.isFavorite,
-                    isDone: _task.isDone,
-                  );
+                  _task = _task.copyWith(description: s);
                 });
               },
             ),
@@ -120,12 +110,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     ),
                     onPressed: () {
                       setState(() {
-                        _task = TaskEntity(
-                          title: _task.title,
-                          description: _task.description,
-                          isFavorite: !_task.isFavorite,
-                          isDone: _task.isDone,
-                        );
+                        _task = _task.copyWith(isFavorite: !_task.isFavorite);
                       });
                     },
                   ),
