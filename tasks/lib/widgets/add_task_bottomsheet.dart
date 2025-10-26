@@ -40,7 +40,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
             focusNode: _titleFocusNode,
             autofocus: true,
             style: const TextStyle(fontSize: 16),
-            decoration: const InputDecoration(hintText: '새 할 일'),
+            decoration: const InputDecoration(
+              hintText: '새 할 일',
+              border: InputBorder.none,
+            ),
             onChanged: (s) {
               final t = s.trim();
               if (t == _task.title) return;
