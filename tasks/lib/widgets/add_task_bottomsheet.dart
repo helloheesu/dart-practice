@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:tasks/models/task_entity.dart';
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
+  TaskEntity _task = const TaskEntity(title: '');
+
   final TextEditingController _titleController = TextEditingController();
   final FocusNode _titleFocusNode = FocusNode();
-  TaskEntity _task = const TaskEntity(title: '');
+
+  final TextEditingController _descriptionController = TextEditingController();
+  final FocusNode _descriptionFocusNode = FocusNode();
+  bool _showDescription = false;
 
   @override
   void dispose() {
     _titleController.dispose();
     _titleFocusNode.dispose();
+    _descriptionController.dispose();
+    _descriptionFocusNode.dispose();
     super.dispose();
   }
 
@@ -64,24 +71,65 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               }
             },
           ),
+          if (_showDescription)
+            TextField(
+              controller: _descriptionController,
+              focusNode: _descriptionFocusNode,
+              minLines: 1,
+              maxLines: 6,
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              style: const TextStyle(fontSize: 14),
+              decoration: const InputDecoration(
+                hintText: '세부정보 추가',
+                border: InputBorder.none,
+              ),
+              onChanged: (s) {
+                setState(() {
+                  _task = TaskEntity(
+                    title: _task.title,
+                    description: s,
+                    isFavorite: _task.isFavorite,
+                    isDone: _task.isDone,
+                  );
+                });
+              },
+            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: Icon(
-                  _task.isFavorite ? Icons.star : Icons.star_border,
-                  size: 24,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _task = TaskEntity(
-                      title: _task.title,
-                      description: _task.description,
-                      isFavorite: !_task.isFavorite,
-                      isDone: _task.isDone,
-                    );
-                  });
-                },
+              Row(
+                children: [
+                  if (!_showDescription)
+                    IconButton(
+                      icon: const Icon(Icons.short_text_rounded, size: 24),
+                      onPressed: () {
+                        setState(() {
+                          _showDescription = true;
+                        });
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (!mounted) return;
+                          _descriptionFocusNode.requestFocus();
+                        });
+                      },
+                    ),
+                  IconButton(
+                    icon: Icon(
+                      _task.isFavorite ? Icons.star : Icons.star_border,
+                      size: 24,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _task = TaskEntity(
+                          title: _task.title,
+                          description: _task.description,
+                          isFavorite: !_task.isFavorite,
+                          isDone: _task.isDone,
+                        );
+                      });
+                    },
+                  ),
+                ],
               ),
               TextButton(
                 onPressed: _task.title.isNotEmpty ? _submit : null,

@@ -9,7 +9,7 @@ class AddTaskButton extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          '추가됨: ${task.title}, ${task.isFavorite ? '즐겨찾기' : '즐겨찾기 아님'}',
+          '추가됨: ${task.title}, ${task.isFavorite ? '즐겨찾기' : '즐겨찾기 아님'}, 세부사항: ${task.description ?? '없음'}',
         ),
       ),
     );
