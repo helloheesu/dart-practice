@@ -60,7 +60,7 @@ class ProductDetailPage extends StatelessWidget {
               Text(
                 product.subtitle!,
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withValues(alpha: 0.7),
                   fontSize: 14,
                 ),
               ),
@@ -100,7 +100,7 @@ class _MinutesPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.accent.withOpacity(0.18),
+        color: AppColors.accent.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -131,7 +131,7 @@ class _CategoryChip extends StatelessWidget {
     };
     return Chip(
       label: Text(map[category]!),
-      backgroundColor: AppColors.accent.withOpacity(0.12),
+      backgroundColor: AppColors.accent.withValues(alpha: 0.12),
     );
   }
 }

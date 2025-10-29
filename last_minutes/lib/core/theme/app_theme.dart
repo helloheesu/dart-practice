@@ -46,7 +46,7 @@ ThemeData buildAppTheme() {
       ),
     ),
     chipTheme: base.chipTheme.copyWith(
-      selectedColor: AppColors.accent.withOpacity(0.18),
+      selectedColor: AppColors.accent.withValues(alpha: 0.18),
       side: const BorderSide(color: Colors.transparent),
       shape: const StadiumBorder(),
     ),
