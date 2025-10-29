@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../products/product_create_page.dart';
+import '../../../core/constants/strings.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
@@ -7,12 +8,12 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('관리자')),
+      appBar: AppBar(title: const Text(AppStrings.adminTitle)),
       body: ListView(
         children: [
           ListTile(
             leading: const Icon(Icons.add_box_outlined),
-            title: const Text('상품 등록'),
+            title: const Text(AppStrings.productCreateTitle),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const ProductCreatePage()),
@@ -24,5 +25,3 @@ class AdminPage extends StatelessWidget {
     );
   }
 }
-
-

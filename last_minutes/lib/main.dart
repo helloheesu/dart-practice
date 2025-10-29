@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:alarm/alarm.dart';
 import 'app/app.dart';
+import 'core/constants/strings.dart';
 import 'core/notifications/notification_service.dart';
 
 void main() async {
@@ -16,7 +17,7 @@ void main() async {
       context: ctx,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: const Text('알람 울림'),
+        title: const Text(AppStrings.alarmRinging),
         content: Text(alarm.notificationBody),
         actions: [
           TextButton(
@@ -26,7 +27,7 @@ void main() async {
                 navigatorKey.currentState?.pop();
               }
             },
-            child: const Text('알람 중지'),
+            child: const Text(AppStrings.alarmStop),
           ),
         ],
       ),

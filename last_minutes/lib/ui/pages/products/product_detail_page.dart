@@ -4,6 +4,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../data/model/product.dart';
 import '../../../data/model/product_category.dart';
 import '../../../data/repository/cart_store.dart';
+import '../../../core/constants/strings.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Product product;
@@ -12,7 +13,7 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('상세 보기')),
+      appBar: AppBar(title: const Text(AppStrings.detailTitle)),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -106,8 +107,9 @@ class ProductDetailPage extends StatelessWidget {
                                           AppColors.chipUnselectedBg,
                                     ),
                                     onPressed: qty > 0
-                                        ? () =>
-                                            CartStore.instance.decrement(product)
+                                        ? () => CartStore.instance.decrement(
+                                            product,
+                                          )
                                         : null,
                                     icon: const Icon(Icons.remove),
                                   ),
@@ -124,8 +126,7 @@ class ProductDetailPage extends StatelessWidget {
                                   ),
                                   IconButton(
                                     style: IconButton.styleFrom(
-                                      backgroundColor:
-                                          AppColors.chipSelectedBg,
+                                      backgroundColor: AppColors.chipSelectedBg,
                                       foregroundColor: Colors.white,
                                     ),
                                     onPressed: () =>

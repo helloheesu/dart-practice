@@ -3,6 +3,7 @@ import '../../../data/model/product.dart';
 import '../../../data/model/product_category.dart';
 import '../../../data/repository/product_repository_mock.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/strings.dart';
 
 class ProductCreatePage extends StatefulWidget {
   const ProductCreatePage({super.key});
@@ -31,7 +32,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('상품 등록')),
+      appBar: AppBar(title: const Text(AppStrings.productCreateTitle)),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -39,9 +40,12 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
           children: [
             TextFormField(
               controller: _title,
-              decoration: const InputDecoration(labelText: '제목'),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? '제목을 입력하세요' : null,
+              decoration: const InputDecoration(
+                labelText: AppStrings.labelTitle,
+              ),
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? AppStrings.errorEnterTitle
+                  : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -62,7 +66,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             const SizedBox(height: 12),
             DropdownButtonFormField<ProductCategory>(
               value: _category,
-              decoration: const InputDecoration(labelText: '카테고리'),
+              decoration: const InputDecoration(
+                labelText: AppStrings.labelCategory,
+              ),
               items: [
                 for (final c in ProductCategory.values)
                   DropdownMenuItem(value: c, child: Text(c.label)),
@@ -71,7 +77,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             ),
             const SizedBox(height: 12),
             SwitchListTile(
-              title: const Text('프리미엄 상품'),
+              title: const Text(AppStrings.labelPremiumProduct),
               value: _premium,
               onChanged: (v) => setState(() => _premium = v),
             ),
@@ -82,7 +88,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 foregroundColor: Colors.white,
               ),
               onPressed: _submit,
-              child: const Text('등록'),
+              child: const Text(AppStrings.labelRegister),
             ),
           ],
         ),

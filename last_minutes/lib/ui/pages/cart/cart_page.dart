@@ -3,6 +3,7 @@ import '../../../core/utils/format.dart';
 import '../../../data/repository/cart_store.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/notifications/notification_service.dart';
+import '../../../core/constants/strings.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -11,7 +12,7 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = CartStore.instance;
     return Scaffold(
-      appBar: AppBar(title: const Text('장바구니')),
+      appBar: AppBar(title: const Text(AppStrings.cart)),
       body: AnimatedBuilder(
         animation: store,
         builder: (context, _) {
@@ -56,7 +57,7 @@ class CartPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          '총합 시간',
+                          AppStrings.totalTime,
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
                         Text(
@@ -74,24 +75,24 @@ class CartPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.alarm),
-                        label: const Text('예약'),
+                        label: const Text(AppStrings.reserve),
                         onPressed: () async {
                           final minutes = store.totalMinutes;
-                          await NotificationService.instance
-                              .scheduleAfterMinutes(
-                                minutes: minutes,
-                                title: '⏰ 예약 알림',
-                                body: '${formatMinutes(minutes)}이 지났습니다..',
-                              );
+                          await NotificationService.instance.scheduleAfterMinutes(
+                            minutes: minutes,
+                            title: AppStrings.alarmTitle,
+                            body:
+                                '${formatMinutes(minutes)}${AppStrings.alarmElapsedSuffix}',
+                          );
 
                           if (!context.mounted) return;
 
                           await showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                              title: const Text('예약 완료'),
+                              title: const Text(AppStrings.reservationDone),
                               content: Text(
-                                '총 ${formatMinutes(minutes)} 후 알람이 울립니다.',
+                                '총 ${formatMinutes(minutes)}${AppStrings.alarmReservedSuffix}',
                               ),
                               actions: [
                                 TextButton(
