@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/strings.dart';
 import '../../../data/model/product_category.dart';
+import '../../../core/theme/app_theme.dart';
 
 class CategoryFilterBar extends StatelessWidget {
   final ProductCategory? selected;
@@ -26,7 +27,18 @@ class CategoryFilterBar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: ChoiceChip(
-                label: Text(item.label),
+                label: Text(
+                  item.label,
+                  style: TextStyle(
+                    color: selected == item.value
+                        ? Colors.white
+                        : AppColors.chipText,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                selectedColor: AppColors.chipSelectedBg,
+                backgroundColor: AppColors.chipUnselectedBg,
+                checkmarkColor: Colors.white,
                 selected: selected == item.value,
                 onSelected: (_) => onChanged(item.value),
               ),

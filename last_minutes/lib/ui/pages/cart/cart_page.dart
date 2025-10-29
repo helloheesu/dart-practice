@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/utils/format.dart';
 import '../../../data/repository/cart_store.dart';
+import '../../../core/theme/app_theme.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -36,6 +37,8 @@ class CartPage extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
                       leading: CircleAvatar(
+                        backgroundColor: AppColors.chipUnselectedBg,
+                        foregroundColor: AppColors.muted,
                         child: Text(item.quantity.toString()),
                       ),
                       onLongPress: () => store.removeAt(i),
@@ -65,6 +68,10 @@ class CartPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.chipSelectedBg,
+                          foregroundColor: Colors.white,
+                        ),
                         icon: const Icon(Icons.alarm),
                         label: const Text('결제 (알람 예약 예정)'),
                         onPressed: () async {

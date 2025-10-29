@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../data/model/product.dart';
 import '../../../data/model/product_category.dart';
 import '../../../data/repository/product_repository_mock.dart';
+import '../../../core/theme/app_theme.dart';
 
 class ProductCreatePage extends StatefulWidget {
   const ProductCreatePage({super.key});
@@ -75,7 +76,14 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
               onChanged: (v) => setState(() => _premium = v),
             ),
             const SizedBox(height: 20),
-            FilledButton(onPressed: _submit, child: const Text('등록')),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.chipSelectedBg,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: _submit,
+              child: const Text('등록'),
+            ),
           ],
         ),
       ),

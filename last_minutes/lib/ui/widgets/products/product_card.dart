@@ -79,17 +79,15 @@ class _PriceText extends StatelessWidget {
   const _PriceText({required this.minutes});
   @override
   Widget build(BuildContext context) {
+    final color = AppColors.timeColor(minutes);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(Icons.schedule, size: 16),
+        Icon(Icons.schedule, size: 16, color: color),
         const SizedBox(width: 6),
         Text(
           formatMinutes(minutes),
-          style: const TextStyle(
-            color: AppColors.accent,
-            fontWeight: FontWeight.w800,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w800),
         ),
       ],
     );

@@ -7,8 +7,7 @@
 - 상품 목록: 앱 최초 진입. 카테고리 필터 + 반응형 그리드 카드 UI
 - 상품 상세: 제목/설명/시간 배지/카테고리/프리미엄 표시
 - 상품 등록: 간단한 폼으로 로컬 Mock 레포에 항목 추가
-
-카테고리: 디지털 블랙홀, 충동 프로젝트, 회피형 생산성, 일상의 시간도둑. 💎 표시는 잊기 쉬운 소중한 시간을 의미하는 프리미엄 상품입니다.
+- 장바구니: 담긴 상품 수량/개별 시간/총합 시간 표시, 길게 눌러 제거
 
 ## 실행
 
@@ -25,13 +24,13 @@ lib/
   app/
     app.dart                      # MaterialApp 루트(초기 진입: ProductListPage)
   core/
-    theme/app_theme.dart          # 레트로 톤 테마
+    theme/app_theme.dart          # 네이비/블루그레이 기반 테마
     utils/format.dart             # 분 → "3시간 30분" 포맷터
     constants/strings.dart        # 공용 문자열
   data/
     model/
       product.dart                # Product 엔티티 (id, title, minutes, category, premium, subtitle)
-      product_category.dart       # 카테고리 enum
+      product_category.dart       # 카테고리 enhanced enum (code/label/emoji/order)
     repository/
       product_repository.dart     # 레포 인터페이스
       product_repository_mock.dart# In-memory Mock(36개 데이터, add 지원)
@@ -41,11 +40,26 @@ lib/
         product_list_page.dart    # 목록 + 필터 + 그리드
         product_detail_page.dart  # 상세 화면
         product_create_page.dart  # 등록 화면(FAB 경유)
+      cart/
+        cart_page.dart            # 장바구니 화면(총합/결제 버튼)
     widgets/
       products/
         product_card.dart         # 카드 컴포넌트(시간/프리미엄 뱃지)
         category_filter_bar.dart  # 카테고리 ChoiceChip 바
 ```
+
+## 주요 인터랙션
+
+- 카드 길게 누르기: 해당 상품을 장바구니에 즉시 담기(SnackBar 안내)
+- 카드 탭: 상세 화면으로 이동 → 하단 버튼으로 담기 가능
+- 카테고리 칩: 선택 시 강조(네이비 배경/화이트 텍스트), 비선택은 블루그레이
+- 시간 색상: 분(min)에 따라 동적 컬러(≤5, ≤60, ≤119, 그 이상)로 가독성 향상
+- 프리미엄(💎): 프리미엄 강조 색상 및 배지 표시
+
+## 설계 메모
+
+- 카테고리: enhanced enum(`Category`) 한 곳에서 code/label/emoji/order 관리
+- 테마: 네이비/블루그레이 기반 팔레트(`AppColors`), 칩/카드/시간 색상 토큰화
 
 ### 네이밍/규칙
 

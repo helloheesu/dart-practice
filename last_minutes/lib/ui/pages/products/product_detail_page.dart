@@ -72,6 +72,10 @@ class ProductDetailPage extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.chipSelectedBg,
+                    foregroundColor: Colors.white,
+                  ),
                   icon: const Icon(Icons.check_circle_outline),
                   label: Text('${formatMinutes(product.minutes)} 담기'),
                   onPressed: () {
@@ -97,20 +101,21 @@ class _MinutesPill extends StatelessWidget {
   const _MinutesPill({required this.minutes});
   @override
   Widget build(BuildContext context) {
+    final color = AppColors.timeColor(minutes);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.accent.withValues(alpha: 0.18),
+        color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.timer_outlined, size: 16),
+          Icon(Icons.timer_outlined, size: 16, color: color),
           const SizedBox(width: 6),
           Text(
             formatMinutes(minutes),
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            style: TextStyle(fontWeight: FontWeight.w700, color: color),
           ),
         ],
       ),
@@ -124,8 +129,12 @@ class _CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(category.label),
-      backgroundColor: AppColors.accent.withValues(alpha: 0.12),
+      label: Text(
+        category.label,
+        style: const TextStyle(color: AppColors.chipText),
+      ),
+      backgroundColor: AppColors.chipUnselectedBg,
+      side: const BorderSide(color: AppColors.surfaceBorder),
     );
   }
 }
