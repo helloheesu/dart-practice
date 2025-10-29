@@ -115,22 +115,25 @@ class _ImageWithCart extends StatelessWidget {
                     style: IconButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: const CircleBorder(),
-                      side:
-                          BorderSide(color: Colors.black.withValues(alpha: 0.08)),
+                      side: BorderSide(color: AppColors.surfaceBorder),
                     ),
-                    icon: const Icon(Icons.add_shopping_cart, size: 18),
+                    icon: const Icon(
+                      Icons.add_shopping_cart,
+                      size: 18,
+                      color: AppColors.chipText,
+                    ),
                     onPressed: () => CartStore.instance.increment(product),
                   );
                 }
                 return Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.black.withValues(alpha: 0.08),
-                    ),
+                    border: Border.all(color: AppColors.surfaceBorder),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -138,16 +141,27 @@ class _ImageWithCart extends StatelessWidget {
                       IconButton(
                         visualDensity: VisualDensity.compact,
                         iconSize: 18,
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.chipUnselectedBg,
+                          foregroundColor: AppColors.chipText,
+                        ),
                         onPressed: () => CartStore.instance.decrement(product),
                         icon: const Icon(Icons.remove),
                       ),
                       Text(
                         qty.toString(),
-                        style: const TextStyle(fontWeight: FontWeight.w700),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.chipText,
+                        ),
                       ),
                       IconButton(
                         visualDensity: VisualDensity.compact,
                         iconSize: 18,
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.chipSelectedBg,
+                          foregroundColor: Colors.white,
+                        ),
                         onPressed: () => CartStore.instance.increment(product),
                         icon: const Icon(Icons.add),
                       ),

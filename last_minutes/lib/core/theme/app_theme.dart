@@ -54,7 +54,10 @@ ThemeData buildAppTheme() {
     tabBarTheme: const TabBarThemeData(
       labelColor: Colors.white,
       unselectedLabelColor: Color(0xB3FFFFFF), // white 70%
-      indicatorColor: AppColors.accent,
+      indicatorColor: Colors.white,
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(color: Colors.white, width: 2),
+      ),
       labelStyle: TextStyle(fontWeight: FontWeight.w700),
       unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
     ),
