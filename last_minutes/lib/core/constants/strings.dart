@@ -22,6 +22,8 @@ class AppStrings {
   static const String adminTitle = '관리자';
   static const String productCreateTitle = '상품 등록';
   static const String cartEmpty = '장바구니가 비었습니다.';
+  static const String addToCart = '장바구니에 담기';
+  static const String goToCart = '장바구니로 가기';
 
   // Form labels / validation
   static const String labelTitle = '제목';
