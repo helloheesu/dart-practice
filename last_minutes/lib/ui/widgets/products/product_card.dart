@@ -94,7 +94,7 @@ class _ImageWithCart extends StatelessWidget {
   const _ImageWithCart({required this.category, required this.product});
   @override
   Widget build(BuildContext context) {
-    final emoji = category.emoji;
+    final emoji = product.premium ? '💎' : category.emoji;
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Stack(
