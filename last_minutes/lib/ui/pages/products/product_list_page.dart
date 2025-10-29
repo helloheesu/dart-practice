@@ -61,11 +61,7 @@ class _ProductListPageState extends State<ProductListPage>
         ),
         body: TabBarView(
           children: [
-            _HomeTab(
-              onSelect: (idx) {
-                DefaultTabController.of(context).animateTo(1 + idx);
-              },
-            ),
+            const _HomeTab(),
             for (final c in categories)
               _CategoryGrid(
                 products: allProducts.where((p) => p.category == c).toList(),
@@ -106,8 +102,7 @@ class _CategoryGrid extends StatelessWidget {
 }
 
 class _HomeTab extends StatelessWidget {
-  final ValueChanged<int> onSelect;
-  const _HomeTab({required this.onSelect});
+  const _HomeTab();
   @override
   Widget build(BuildContext context) {
     final cats = ProductCategory.values;
@@ -127,7 +122,10 @@ class _HomeTab extends StatelessWidget {
         return Card(
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(16)),
-            onTap: () => onSelect(i),
+            onTap: () {
+              final controller = DefaultTabController.of(context);
+              controller.animateTo(1 + i);
+            },
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
