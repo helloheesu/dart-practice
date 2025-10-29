@@ -28,15 +28,7 @@ class ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ImageWithCart(
-                category: product.category,
-                onAdd: () {
-                  CartStore.instance.add(product);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('장바구니에 "${product.title}" 추가됨')),
-                  );
-                },
-              ),
+              _ImageWithCart(category: product.category, product: product),
               const SizedBox(height: 8),
               Text(
                 product.title,
@@ -91,8 +83,8 @@ class _PriceText extends StatelessWidget {
 
 class _ImageWithCart extends StatelessWidget {
   final ProductCategory category;
-  final VoidCallback onAdd;
-  const _ImageWithCart({required this.category, required this.onAdd});
+  final Product product;
+  const _ImageWithCart({required this.category, required this.product});
   @override
   Widget build(BuildContext context) {
     final emoji = category.emoji;
@@ -113,15 +105,56 @@ class _ImageWithCart extends StatelessWidget {
           Positioned(
             right: 8,
             bottom: 8,
-            child: IconButton(
-              visualDensity: VisualDensity.compact,
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: const CircleBorder(),
-                side: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
-              ),
-              icon: const Icon(Icons.add_shopping_cart, size: 18),
-              onPressed: onAdd,
+            child: AnimatedBuilder(
+              animation: CartStore.instance,
+              builder: (context, _) {
+                final qty = CartStore.instance.quantityOf(product.id);
+                if (qty <= 0) {
+                  return IconButton(
+                    visualDensity: VisualDensity.compact,
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: const CircleBorder(),
+                      side:
+                          BorderSide(color: Colors.black.withValues(alpha: 0.08)),
+                    ),
+                    icon: const Icon(Icons.add_shopping_cart, size: 18),
+                    onPressed: () => CartStore.instance.increment(product),
+                  );
+                }
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.black.withValues(alpha: 0.08),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        iconSize: 18,
+                        onPressed: () => CartStore.instance.decrement(product),
+                        icon: const Icon(Icons.remove),
+                      ),
+                      Text(
+                        qty.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        iconSize: 18,
+                        onPressed: () => CartStore.instance.increment(product),
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ],

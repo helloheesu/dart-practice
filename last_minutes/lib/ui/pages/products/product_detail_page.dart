@@ -69,24 +69,78 @@ class ProductDetailPage extends StatelessWidget {
             SafeArea(
               top: false,
               minimum: const EdgeInsets.only(bottom: 12),
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.chipSelectedBg,
-                    foregroundColor: Colors.white,
-                  ),
-                  icon: const Icon(Icons.check_circle_outline),
-                  label: Text('${formatMinutes(product.minutes)} 담기'),
-                  onPressed: () {
-                    CartStore.instance.add(product);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('장바구니에 "${product.title}"이(가) 담겼어요.'),
+              child: AnimatedBuilder(
+                animation: CartStore.instance,
+                builder: (context, _) {
+                  final qty = CartStore.instance.quantityOf(product.id);
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.surfaceBorder),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                formatMinutes(
+                                  product.minutes * (qty == 0 ? 1 : qty),
+                                ),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    style: IconButton.styleFrom(
+                                      backgroundColor:
+                                          AppColors.chipUnselectedBg,
+                                    ),
+                                    onPressed: qty > 0
+                                        ? () =>
+                                            CartStore.instance.decrement(product)
+                                        : null,
+                                    icon: const Icon(Icons.remove),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: Text(
+                                      qty.toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    style: IconButton.styleFrom(
+                                      backgroundColor:
+                                          AppColors.chipSelectedBg,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    onPressed: () =>
+                                        CartStore.instance.increment(product),
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    );
-                  },
-                ),
+                    ],
+                  );
+                },
               ),
             ),
           ],
