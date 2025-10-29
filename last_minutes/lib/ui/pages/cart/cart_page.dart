@@ -90,6 +90,7 @@ class CartPage extends StatelessWidget {
                               ],
                             ),
                           );
+                          store.clear();
                         },
                       ),
                     ),
