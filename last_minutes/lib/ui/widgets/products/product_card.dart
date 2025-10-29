@@ -22,12 +22,7 @@ class ProductCard extends StatelessWidget {
             ),
           );
         },
-        onLongPress: () {
-          CartStore.instance.add(product);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('장바구니에 "${product.title}" 추가됨 (길게 눌러 담기).')),
-          );
-        },
+        onLongPress: null,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
