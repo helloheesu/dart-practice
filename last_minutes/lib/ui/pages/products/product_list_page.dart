@@ -162,16 +162,32 @@ class _CartFabState extends State<_CartFab> {
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            FloatingActionButton(
-              backgroundColor: AppColors.chipSelectedBg,
-              foregroundColor: Colors.white,
-              onPressed: () {
-                Navigator.of(
-                  context,
-                ).push(MaterialPageRoute(builder: (_) => const CartPage()));
-              },
-              child: const Icon(Icons.shopping_cart_outlined),
-            ),
+            total > 0
+                ? FloatingActionButton.large(
+                    heroTag: 'cart-fab-large',
+                    backgroundColor: AppColors.chipSelectedBg,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const CartPage()),
+                      );
+                    },
+                    child: const Icon(Icons.shopping_cart_outlined),
+                  )
+                : FloatingActionButton(
+                    heroTag: 'cart-fab-normal',
+                    backgroundColor: AppColors.chipSelectedBg,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const CartPage()),
+                      );
+                    },
+                    child: const Icon(Icons.shopping_cart_outlined),
+                  ),
             if (total > 0)
               Positioned(
                 right: -4,
