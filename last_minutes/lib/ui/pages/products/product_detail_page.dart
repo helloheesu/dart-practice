@@ -65,18 +65,22 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ],
             const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                icon: const Icon(Icons.check_circle_outline),
-                label: Text('${formatMinutes(product.minutes)} 담기'),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('장바구니에 "${product.title}"이(가) 담겼어요.'),
-                    ),
-                  );
-                },
+            SafeArea(
+              top: false,
+              minimum: const EdgeInsets.only(bottom: 12),
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  icon: const Icon(Icons.check_circle_outline),
+                  label: Text('${formatMinutes(product.minutes)} 담기'),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('장바구니에 "${product.title}"이(가) 담겼어요.'),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],
