@@ -51,6 +51,13 @@ ThemeData buildAppTheme() {
       ),
       iconTheme: IconThemeData(color: Colors.white),
     ),
+    tabBarTheme: const TabBarThemeData(
+      labelColor: Colors.white,
+      unselectedLabelColor: Color(0xB3FFFFFF), // white 70%
+      indicatorColor: AppColors.accent,
+      labelStyle: TextStyle(fontWeight: FontWeight.w700),
+      unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
+    ),
     textTheme: base.textTheme.apply(
       bodyColor: AppColors.muted,
       displayColor: AppColors.muted,
