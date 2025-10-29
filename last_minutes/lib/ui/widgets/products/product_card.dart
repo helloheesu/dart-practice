@@ -3,6 +3,7 @@ import '../../../core/utils/format.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/model/product.dart';
 import '../../pages/products/product_detail_page.dart';
+import '../../../data/repository/cart_store.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -79,6 +80,12 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ),
+        onLongPress: () {
+          CartStore.instance.add(product);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('장바구니에 "${product.title}" 추가됨 (길게 눌러 담기).')),
+          );
+        },
       ),
     );
   }

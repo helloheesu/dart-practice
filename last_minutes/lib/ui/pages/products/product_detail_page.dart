@@ -3,6 +3,7 @@ import '../../../core/utils/format.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/model/product.dart';
 import '../../../data/model/product_category.dart';
+import '../../../data/repository/cart_store.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Product product;
@@ -74,6 +75,7 @@ class ProductDetailPage extends StatelessWidget {
                   icon: const Icon(Icons.check_circle_outline),
                   label: Text('${formatMinutes(product.minutes)} 담기'),
                   onPressed: () {
+                    CartStore.instance.add(product);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('장바구니에 "${product.title}"이(가) 담겼어요.'),

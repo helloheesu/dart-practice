@@ -5,6 +5,7 @@ import '../../../data/repository/product_repository_mock.dart';
 import '../../widgets/products/category_filter_bar.dart';
 import '../../widgets/products/product_card.dart';
 import 'product_create_page.dart';
+import '../cart/cart_page.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -31,7 +32,19 @@ class _ProductListPageState extends State<ProductListPage> {
         : (width < 1024 ? 1.25 : 1.35);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.appName)),
+      appBar: AppBar(
+        title: const Text(AppStrings.appName),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart_outlined),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const CartPage()));
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           CategoryFilterBar(
