@@ -103,6 +103,10 @@ class CartPage extends StatelessWidget {
                             ),
                           );
                           store.clear();
+                          if (context.mounted &&
+                              Navigator.of(context).canPop()) {
+                            Navigator.of(context).pop();
+                          }
                         },
                       ),
                     ),

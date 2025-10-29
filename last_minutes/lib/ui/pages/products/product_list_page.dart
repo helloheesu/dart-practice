@@ -5,6 +5,9 @@ import '../../../data/repository/product_repository_mock.dart';
 import '../../widgets/products/product_card.dart';
 import '../admin/admin_page.dart';
 import '../cart/cart_page.dart';
+import '../../../data/repository/cart_store.dart';
+import '../../../core/utils/format.dart';
+import '../../../core/theme/app_theme.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -25,13 +28,12 @@ class _ProductListPageState extends State<ProductListPage>
     final crossAxisCount = width < 380
         ? 1
         : (width < 600 ? 2 : (width < 1024 ? 3 : 4));
-    // Make cards taller on smaller screens to avoid text overflow
-    // Make cards tall enough for title(2) + subtitle(1) + price row
+    // card aspect ratio tuning for grid
     final aspectRatio = switch (crossAxisCount) {
       1 => 0.90,
       2 => 0.78,
       3 => 0.90,
-      _ => 0.95, // 4+ columns: slightly taller than square
+      _ => 0.95,
     };
 
     return DefaultTabController(
@@ -40,20 +42,12 @@ class _ProductListPageState extends State<ProductListPage>
         appBar: AppBar(
           title: const Text(AppStrings.appName),
           actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const AdminPage()));
-            },
-          ),
             IconButton(
-              icon: const Icon(Icons.shopping_cart_outlined),
+              icon: const Icon(Icons.settings_outlined),
               onPressed: () {
                 Navigator.of(
                   context,
-                ).push(MaterialPageRoute(builder: (_) => const CartPage()));
+                ).push(MaterialPageRoute(builder: (_) => const AdminPage()));
               },
             ),
           ],
@@ -80,6 +74,7 @@ class _ProductListPageState extends State<ProductListPage>
               ),
           ],
         ),
+        floatingActionButton: _CartFab(),
       ),
     );
   }
@@ -147,6 +142,63 @@ class _HomeTab extends StatelessWidget {
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+class _CartFab extends StatefulWidget {
+  @override
+  State<_CartFab> createState() => _CartFabState();
+}
+
+class _CartFabState extends State<_CartFab> {
+  @override
+  Widget build(BuildContext context) {
+    final store = CartStore.instance;
+    return AnimatedBuilder(
+      animation: store,
+      builder: (context, _) {
+        final total = store.totalMinutes;
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            FloatingActionButton(
+              backgroundColor: AppColors.chipSelectedBg,
+              foregroundColor: Colors.white,
+              onPressed: () {
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => const CartPage()));
+              },
+              child: const Icon(Icons.shopping_cart_outlined),
+            ),
+            if (total > 0)
+              Positioned(
+                right: -4,
+                top: -8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.chipSelectedBg,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Text(
+                    formatMinutesShort(total),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         );
       },
     );
