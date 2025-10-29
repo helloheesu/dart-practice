@@ -3,7 +3,7 @@ import '../../../core/constants/strings.dart';
 import '../../../data/model/product_category.dart';
 import '../../../data/repository/product_repository_mock.dart';
 import '../../widgets/products/product_card.dart';
-// import '../admin/admin_page.dart';
+import '../admin/admin_page.dart';
 import '../cart/cart_page.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -40,7 +40,14 @@ class _ProductListPageState extends State<ProductListPage>
         appBar: AppBar(
           title: const Text(AppStrings.appName),
           actions: [
-          // Settings icon will be added in a later step
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const AdminPage()));
+            },
+          ),
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined),
               onPressed: () {
