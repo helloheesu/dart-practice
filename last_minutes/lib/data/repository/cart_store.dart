@@ -35,8 +35,8 @@ class CartStore extends ChangeNotifier {
     final idx = _items.indexWhere((e) => e.product.id == product.id);
     if (idx < 0) return;
     _items[idx].quantity -= 1;
-    if (_items[idx].quantity <= 0) {
-      _items.removeAt(idx);
+    if (_items[idx].quantity < 0) {
+      _items[idx].quantity = 0;
     }
     notifyListeners();
   }

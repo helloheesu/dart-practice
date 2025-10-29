@@ -35,4 +35,19 @@ class NotificationService {
   Future<void> stopAll() async {
     await Alarm.stopAll();
   }
+
+  Future<int> getRemainingMinutes({int id = 1}) async {
+    final alarms = await Alarm.getAlarms();
+    final active = alarms.where((a) => a.id == id);
+    if (active.isEmpty) return 0;
+    final alarm = active.first;
+    final diff = alarm.dateTime.difference(DateTime.now());
+    final remaining = diff.inMinutes;
+    return remaining > 0 ? remaining : 0;
+  }
+
+  Future<bool> hasActive({int id = 1}) async {
+    final left = await getRemainingMinutes(id: id);
+    return left > 0;
+  }
 }
