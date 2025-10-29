@@ -10,11 +10,11 @@ void main() async {
   runApp(const App());
 
   // Show a stop dialog when alarm rings
-  Alarm.ringStream.stream.listen((alarm) async {
-    final ctx = navigatorKey.currentContext;
-    if (ctx == null) return;
+  Alarm.ringStream.stream.listen((alarm) {
+    final nav = navigatorKey.currentState;
+    if (nav == null || !nav.mounted) return;
     showDialog(
-      context: ctx,
+      context: nav.context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
         title: const Text(AppStrings.alarmRinging),
