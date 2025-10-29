@@ -4,6 +4,7 @@ import '../../../data/model/product_category.dart';
 import '../../../data/repository/product_repository_mock.dart';
 import '../../widgets/products/category_filter_bar.dart';
 import '../../widgets/products/product_card.dart';
+import 'product_create_page.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -51,6 +52,15 @@ class _ProductListPageState extends State<ProductListPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final created = await Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const ProductCreatePage()));
+          if (created == true && mounted) setState(() {});
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

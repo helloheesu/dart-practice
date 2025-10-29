@@ -248,4 +248,10 @@ class ProductRepositoryMock implements ProductRepository {
 
   @override
   List<Product> getAll() => List<Product>.unmodifiable(_products);
+
+  @override
+  void add(Product product) {
+    // naive in-memory add for practice
+    _products.insert(0, product);
+  }
 }

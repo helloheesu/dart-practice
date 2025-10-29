@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/format.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/model/product.dart';
+import '../../pages/products/product_detail_page.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -13,7 +14,11 @@ class ProductCard extends StatelessWidget {
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(16)),
         onTap: () {
-          // 상세 페이지는 후속 단계에서 연결
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProductDetailPage(product: product),
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(14),
