@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/format.dart';
 import '../../../data/repository/cart_store.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/notifications/notification_service.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -73,14 +74,24 @@ class CartPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                         ),
                         icon: const Icon(Icons.alarm),
-                        label: const Text('결제 (알람 예약 예정)'),
+                        label: const Text('예약'),
                         onPressed: () async {
+                          final minutes = store.totalMinutes;
+                          await NotificationService.instance
+                              .scheduleAfterMinutes(
+                                minutes: minutes,
+                                title: '⏰ 예약 알림',
+                                body: '${formatMinutes(minutes)}이 지났습니다..',
+                              );
+
+                          if (!context.mounted) return;
+
                           await showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
-                              title: const Text('주문 완료'),
+                              title: const Text('예약 완료'),
                               content: Text(
-                                '총 ${formatMinutes(store.totalMinutes)} 후 알람을 설정할 예정입니다.',
+                                '총 ${formatMinutes(minutes)} 후 알람이 울립니다.',
                               ),
                               actions: [
                                 TextButton(
