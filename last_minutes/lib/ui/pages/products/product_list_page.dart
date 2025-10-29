@@ -25,11 +25,17 @@ class _ProductListPageState extends State<ProductListPage> {
         ? allProducts
         : allProducts.where((p) => p.category == _selected).toList();
     final width = MediaQuery.sizeOf(context).width;
-    final crossAxisCount = width < 600 ? 2 : (width < 1024 ? 3 : 4);
+    final crossAxisCount = width < 380
+        ? 1
+        : (width < 600 ? 2 : (width < 1024 ? 3 : 4));
     // Make cards taller on smaller screens to avoid text overflow
-    final aspectRatio = width < 600
-        ? 1.0 // phones: taller cards
-        : (width < 1024 ? 1.25 : 1.35);
+    // Make cards tall enough for title(2) + subtitle(1) + price row
+    final aspectRatio = switch (crossAxisCount) {
+      1 => 0.90,
+      2 => 0.78,
+      3 => 0.90,
+      _ => 0.95, // 4+ columns: slightly taller than square
+    };
 
     return Scaffold(
       appBar: AppBar(
