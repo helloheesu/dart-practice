@@ -24,6 +24,10 @@ class _ProductListPageState extends State<ProductListPage> {
         : allProducts.where((p) => p.category == _selected).toList();
     final width = MediaQuery.sizeOf(context).width;
     final crossAxisCount = width < 600 ? 2 : (width < 1024 ? 3 : 4);
+    // Make cards taller on smaller screens to avoid text overflow
+    final aspectRatio = width < 600
+        ? 1.0 // phones: taller cards
+        : (width < 1024 ? 1.25 : 1.35);
 
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.appName)),
@@ -40,7 +44,7 @@ class _ProductListPageState extends State<ProductListPage> {
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 3 / 2,
+                childAspectRatio: aspectRatio,
               ),
               itemCount: filtered.length,
               itemBuilder: (_, i) => ProductCard(product: filtered[i]),
