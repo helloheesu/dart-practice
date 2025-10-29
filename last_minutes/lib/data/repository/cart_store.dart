@@ -34,15 +34,30 @@ class CartStore extends ChangeNotifier {
   void decrement(Product product) {
     final idx = _items.indexWhere((e) => e.product.id == product.id);
     if (idx < 0) return;
-    _items[idx].quantity -= 1;
-    if (_items[idx].quantity < 0) {
-      _items[idx].quantity = 0;
+    final newQuantity = _items[idx].quantity - 1;
+    if (newQuantity <= 0) {
+      removeAt(idx);
+      return;
     }
+    _items[idx].quantity = newQuantity;
+    notifyListeners();
+  }
+
+  /// Decrease quantity but keep the item even if it reaches 0 (used in cart page)
+  void decrementKeep(Product product) {
+    final idx = _items.indexWhere((e) => e.product.id == product.id);
+    if (idx < 0) return;
+    _items[idx].quantity = (_items[idx].quantity - 1).clamp(0, 1 << 31);
     notifyListeners();
   }
 
   void removeAt(int index) {
     _items.removeAt(index);
+    notifyListeners();
+  }
+
+  void removeZeros() {
+    _items.removeWhere((e) => e.quantity <= 0);
     notifyListeners();
   }
 

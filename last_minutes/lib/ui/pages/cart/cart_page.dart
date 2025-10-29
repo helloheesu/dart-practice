@@ -67,7 +67,7 @@ class CartPage extends StatelessWidget {
                                                   AppColors.chipText,
                                             ),
                                             onPressed: () => CartStore.instance
-                                                .decrement(item.product),
+                                                .decrementKeep(item.product),
                                             icon: const Icon(Icons.remove),
                                           ),
                                           Text(
@@ -135,11 +135,18 @@ class CartPage extends StatelessWidget {
                     }
 
                     final showTotalRow = store.items.isNotEmpty;
+                    final total = store.totalMinutes;
+                    final isTotalZero = total == 0;
+                    final canPress = hasActive
+                        ? (store.items.isEmpty ? true : !isTotalZero)
+                        : !isTotalZero;
                     final buttonLabel = hasActive
                         ? (store.items.isEmpty
                               ? '알람 취소 (${remaining}분 남음)'
-                              : '알람 수정 (${remaining}분 남음)')
-                        : AppStrings.reserve;
+                              : (isTotalZero
+                                    ? '0분은 예약할 수 없어요'
+                                    : '알람 수정 (${remaining}분 남음)'))
+                        : (isTotalZero ? '0분은 예약할 수 없어요' : AppStrings.reserve);
 
                     return Column(
                       children: [
@@ -170,49 +177,58 @@ class CartPage extends StatelessWidget {
                             ),
                             icon: const Icon(Icons.alarm),
                             label: Text(buttonLabel),
-                            onPressed: () async {
-                              if (hasActive && store.items.isEmpty) {
-                                await NotificationService.instance.stop();
-                                if (!context.mounted) return;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('알람이 취소되었습니다.')),
-                                );
-                                return;
-                              }
+                            onPressed: canPress
+                                ? () async {
+                                    store.removeZeros();
+                                    if (hasActive && store.items.isEmpty) {
+                                      await NotificationService.instance.stop();
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('알람이 취소되었습니다.'),
+                                        ),
+                                      );
+                                      return;
+                                    }
 
-                              final minutes = store.totalMinutes;
-                              await NotificationService.instance
-                                  .scheduleAfterMinutes(
-                                    minutes: minutes,
-                                    title: AppStrings.alarmTitle,
-                                    body:
-                                        '${formatMinutes(minutes)}${AppStrings.alarmElapsedSuffix}',
-                                  );
+                                    final minutes = store.totalMinutes;
+                                    await NotificationService.instance
+                                        .scheduleAfterMinutes(
+                                          minutes: minutes,
+                                          title: AppStrings.alarmTitle,
+                                          body:
+                                              '${formatMinutes(minutes)}${AppStrings.alarmElapsedSuffix}',
+                                        );
 
-                              if (!context.mounted) return;
+                                    if (!context.mounted) return;
 
-                              await showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                  title: const Text(AppStrings.reservationDone),
-                                  content: Text(
-                                    '총 ${formatMinutes(minutes)}${AppStrings.alarmReservedSuffix}',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: const Text('확인'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                              store.clear();
-                              if (context.mounted &&
-                                  Navigator.of(context).canPop()) {
-                                Navigator.of(context).pop();
-                              }
-                            },
+                                    await showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: const Text(
+                                          AppStrings.reservationDone,
+                                        ),
+                                        content: Text(
+                                          '총 ${formatMinutes(minutes)}${AppStrings.alarmReservedSuffix}',
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(),
+                                            child: const Text('확인'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                    store.clear();
+                                    if (context.mounted &&
+                                        Navigator.of(context).canPop()) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  }
+                                : null,
                           ),
                         ),
                       ],
