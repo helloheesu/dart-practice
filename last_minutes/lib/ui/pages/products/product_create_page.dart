@@ -15,7 +15,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   final _title = TextEditingController();
   final _minutes = TextEditingController();
   final _subtitle = TextEditingController();
-  ProductCategory _category = ProductCategory.digitalBlackhole;
+  ProductCategory _category = ProductCategory.takeFive;
   bool _premium = false;
   final _repo = ProductRepositoryMock();
 
@@ -62,23 +62,9 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
             DropdownButtonFormField<ProductCategory>(
               value: _category,
               decoration: const InputDecoration(labelText: '카테고리'),
-              items: const [
-                DropdownMenuItem(
-                  value: ProductCategory.digitalBlackhole,
-                  child: Text('디지털 블랙홀'),
-                ),
-                DropdownMenuItem(
-                  value: ProductCategory.impulseProjects,
-                  child: Text('충동 프로젝트'),
-                ),
-                DropdownMenuItem(
-                  value: ProductCategory.avoidantProductivity,
-                  child: Text('회피형 생산성'),
-                ),
-                DropdownMenuItem(
-                  value: ProductCategory.everydayTimeThieves,
-                  child: Text('일상의 시간도둑'),
-                ),
+              items: [
+                for (final c in ProductCategory.values)
+                  DropdownMenuItem(value: c, child: Text(c.label)),
               ],
               onChanged: (v) => setState(() => _category = v ?? _category),
             ),

@@ -14,23 +14,8 @@ class CategoryFilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = <({String label, ProductCategory? value})>[
-      (label: AppStrings.all, value: null),
-      (
-        label: AppStrings.digitalBlackhole,
-        value: ProductCategory.digitalBlackhole,
-      ),
-      (
-        label: AppStrings.impulseProjects,
-        value: ProductCategory.impulseProjects,
-      ),
-      (
-        label: AppStrings.avoidantProductivity,
-        value: ProductCategory.avoidantProductivity,
-      ),
-      (
-        label: AppStrings.everydayTimeThieves,
-        value: ProductCategory.everydayTimeThieves,
-      ),
+      (label: AppStrings.allCategory, value: null),
+      for (final c in ProductCategory.values) (label: c.label, value: c),
     ];
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

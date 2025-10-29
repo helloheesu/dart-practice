@@ -102,12 +102,7 @@ class _ImageWithCart extends StatelessWidget {
   const _ImageWithCart({required this.category, required this.onAdd});
   @override
   Widget build(BuildContext context) {
-    final emoji = switch (category) {
-      ProductCategory.digitalBlackhole => '📱',
-      ProductCategory.impulseProjects => '🎯',
-      ProductCategory.avoidantProductivity => '🗂️',
-      ProductCategory.everydayTimeThieves => '⏰',
-    };
+    final emoji = category.emoji;
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Stack(

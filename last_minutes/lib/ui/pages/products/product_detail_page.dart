@@ -123,14 +123,8 @@ class _CategoryChip extends StatelessWidget {
   const _CategoryChip({required this.category});
   @override
   Widget build(BuildContext context) {
-    final map = {
-      ProductCategory.digitalBlackhole: '디지털 블랙홀',
-      ProductCategory.impulseProjects: '충동 프로젝트',
-      ProductCategory.avoidantProductivity: '회피형 생산성',
-      ProductCategory.everydayTimeThieves: '일상의 시간도둑',
-    };
     return Chip(
-      label: Text(map[category]!),
+      label: Text(category.label),
       backgroundColor: AppColors.accent.withValues(alpha: 0.12),
     );
   }
