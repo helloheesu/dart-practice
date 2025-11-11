@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:week8_book_searcher/ui/home/widgets/home_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
