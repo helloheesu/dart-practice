@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:week8_book_searcher/ui/home/widgets/home_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -72,7 +73,17 @@ class _HomePageState extends State<HomePage> {
             mainAxisSpacing: 10,
           ),
           itemBuilder: (context, index) {
-            return Image.network('https://picsum.photos/200/300');
+            return GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return HomeBottomSheet();
+                  },
+                );
+              },
+              child: Image.network('https://picsum.photos/200/300'),
+            );
           },
         ),
       ),
