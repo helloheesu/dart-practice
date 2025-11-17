@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:week8_book_searcher/ui/home/home_view_model.dart';
 import 'package:week8_book_searcher/ui/home/widgets/home_bottom_sheet.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -18,11 +20,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onSearch(String text) {
+    // TODO: 홈뷰모델의 searchBooks 메서드 호출
     print('onSearch 호출됨 $text');
+    ref.read(homeViewModelProvider.notifier).searchPlaces();
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeState = ref.watch(homeViewModelProvider);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -65,24 +71,29 @@ class _HomePageState extends State<HomePage> {
         ),
         body: GridView.builder(
           padding: EdgeInsets.all(20),
-          itemCount: 10,
+          itemCount: homeState.places.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 3 / 4,
+            crossAxisCount: 2,
+            childAspectRatio: 2 / 1,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
           itemBuilder: (context, index) {
+            final place = homeState.places[index];
+
             return GestureDetector(
               onTap: () {
                 showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return HomeBottomSheet();
+                    return HomeBottomSheet(place: place);
                   },
                 );
               },
-              child: Image.network('https://picsum.photos/200/300'),
+              child: Container(
+                color: Colors.deepPurpleAccent.shade100,
+                child: Text(place.placeName),
+              ),
             );
           },
         ),

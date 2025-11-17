@@ -15,6 +15,8 @@ class PlaceRepository {
 
     final headers = {'Authorization': authorization};
 
+    print('요청 보내는 중');
+
     final http.Response response;
     try {
       response = await _client.get(Uri.parse(url), headers: headers);
@@ -22,6 +24,7 @@ class PlaceRepository {
       print("http request error: $e");
       return [];
     }
+    print('정상 응답 ${response.statusCode}');
 
     if (response.statusCode != 200) {
       return [];
@@ -36,6 +39,8 @@ class PlaceRepository {
     }
     final documents = List.from(map['documents']);
     List<Place> places = documents.map((doc) => Place.fromJson(doc)).toList();
+
+    print(places.toString());
 
     return places;
   }

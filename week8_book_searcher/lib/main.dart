@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8_book_searcher/ui/home/home_page.dart';
-import 'package:week8_book_searcher/ui/detail/detail_page.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: 'lib/.env');
-  runApp(const MainApp());
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -13,6 +13,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: DetailPage());
+    return MaterialApp(home: HomePage());
   }
 }

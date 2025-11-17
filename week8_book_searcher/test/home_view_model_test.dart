@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:week8_book_searcher/data/repository/place_repository.dart';
 import 'package:week8_book_searcher/ui/home/home_view_model.dart';
 

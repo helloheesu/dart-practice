@@ -1,4 +1,4 @@
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:week8_book_searcher/data/model/place.dart';
 import 'package:week8_book_searcher/data/repository/place_repository.dart';
 
